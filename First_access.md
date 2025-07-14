@@ -1,7 +1,7 @@
 Before using CINECA resources you are asked to register yourself and accept their access policy on the CINECA portaL:
 https://eventi.cineca.it/en/hpc/reserved-course/20250505 
 
-Then, you can find your personal trial account in the file accounts_SMR4067.md
+Then, you can find your personal trial account in the file accounts_SMR4088.md
 
 To access Leonardo, we run the command:
 ```

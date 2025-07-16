@@ -209,8 +209,8 @@ module purge
 > ```bash
 > module load python
 > python -m venv venv_huggingface
-> source venv_huggingface
-> pip install pip install huggingface_hub[cli]
+> source venv_huggingface/bin/activate
+> pip install huggingface_hub[cli]
 > huggingface-cli download sapienzanlp/Minerva-7B-instruct-v1.0 --local-dir Minerva-7B-instruct-v1.0
 > ```
 

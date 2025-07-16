@@ -46,6 +46,12 @@ exit
 ```
 You should see that the node name changes again back to the first one you had.
 
+> [!IMPORTANT]  
+> If you are queuing too long just copy my container to your project folder :D
+```bash
+cp /leonardo/pub/userexternal/apilzer0/data/pytorch_25.06-py3.sif $SCRATCH/slm_mt
+```
+
 This should have created a singularity image for us, just to check it works we can send a job to the cluster and see the output
 ```bash
 # go to the project folder

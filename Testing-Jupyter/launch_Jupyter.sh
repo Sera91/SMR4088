@@ -1,6 +1,7 @@
 #!/bin/bash -l
 #SBATCH -A tra25_ictp_scd
 #SBATCH -p boost_usr_prod
+#SBATCH --reservation=s_tra_ictp_scd
 #SBATCH --time 1:15:00       # format: HH:MM:SS
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=2

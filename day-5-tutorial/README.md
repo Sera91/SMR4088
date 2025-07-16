@@ -126,8 +126,8 @@ cd $SCRATCH/slm_mt
 mkdir -p data
 mkdir -p data/raw
 cd data/raw
-# download/move
-# TODO
+# move data here
+cp /leonardo/pub/userexternal/apilzer0/data/. .
 # unzip
 gzip -cd allfiltered.en-it.it-en.shuf-000.txt.gz >> allfiltered_merged_raw.txt
 

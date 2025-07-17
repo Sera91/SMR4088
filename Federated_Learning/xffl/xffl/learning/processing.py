@@ -30,7 +30,7 @@ def distributed_training(
     train_dataloader: DataLoader,
     eval_dataloader: DataLoader,
     state: DistributedState,
-    federated_batches: Optional[int] = None,
+    federated_batches: Optional[int] = 1,
     validate: bool = True,
     epochs: int = 1,
     save_path: Optional[PathLike] = None,

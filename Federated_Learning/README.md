@@ -21,10 +21,10 @@ Here internet is available, but no heavy computation can be run (i.e., no GPUs h
 ### Setup the SSH key for accessing the nodes through SSH
 *After* accessing the Leonardo cluster, students are requested to setup a local SSH keys to allow SSH access to the compute nodes. Please execute the following commands in your $HOME folder on the Leonardo frontend node:
 ```
-ssh-keygen -t ed25519
+ssh-keygen -t rsa
 cd .ssh
 touch authorized_keys
-cat id_ed25519.pub >> authorized_keys
+cat id_rsa.pub >> authorized_keys
 ```
 
 ### Clone the repository and setup the Python virtual environment
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 ### Get computational resources
 Submit to SLURM a request to have 2 GPUs on one compute node in an interactive session:
 ```
-srun -A tra25_ictp_scd --partition boost_usr_prod --time 01:00:00 --gpus-per-node 2 --nodes 1 --pty /bin/bash
+srun -A tra25_ictp_scd --reservation s_tra_ictp_scd_2 --partition boost_usr_prod --time 01:00:00 --gpus-per-node 2 --nodes 1 --pty /bin/bash
 ```
 
 ## On the compute node:
@@ -59,7 +59,7 @@ To run an xFFL training script locally, the ```xffl simulate``` command can be u
 ### Run example 1
 All the arguments after "-args" are referred to the training script:
 ```
-xffl simulate training.py -v ${HOME}/xffl/.venv -p 2 -args --seed 42 -e 3 -wb -mode offline -name MLP -oc
+xffl simulate training.py -v ${HOME}/SMR4088/Federated_Learning/xffl/.venv -p 2 -args --seed 42 -e 3 -wb -mode offline -name MLP -oc
 ```
 To toggle on the federation, add ```-fs 1```
 
@@ -69,14 +69,14 @@ Complete command line arguments information can be found in the ```parser.py``` 
 All the arguments after "-args" are referred to the training script:
 ```
 cd ../02_CNN/
-xffl simulate training.py -v ${HOME}/xffl/.venv -p 4 -args --seed 42 -e 10 -fs 1 -wb -mode offline -name CNN_4c_10e_oc -oc
+xffl simulate training.py -v ${HOME}/SMR4088/Federated_Learning/xffl/.venv -p 4 -args --seed 42 -e 10 -fs 1 -wb -mode offline -name CNN_4c_10e_oc -oc
 ```
 
 ### Run example 3
 All the arguments after "-args" are referred to the training script:
 ```
 cd ../03_LLM/
-xffl simulate training.py -v ${HOME}/xffl/.venv -p 4 -args -m llama3.1-8b -d clean_mc4_it --seed 42 --subsampling 128 -fs 2 -wb -mode offline -name LLM_2c_128t
+xffl simulate training.py -v ${HOME}/SMR4088/Federated_Learning/xffl/.venv -p 4 -args -m llama3.1-8b -d clean_mc4_it --seed 42 --subsampling 128 -fs 2 -wb -mode offline -name LLM_2c_128t
 ```
 
 # Synch WandB runs (on the frontend):

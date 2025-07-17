@@ -49,7 +49,7 @@ if [ "${XFFL_SIMULATION}" = "true" ] ; then
 		GROUP_RANK=$(( _RANK / LOCAL_WORLD_SIZE ))
 
 		XFFL_RANKS="RANK=$RANK LOCAL_RANK=$LOCAL_RANK ROLE_RANK=$ROLE_RANK GROUP_RANK=$GROUP_RANK"
-		XFFL_TASKSET="taskset --cpu-list "$(( LOCAL_RANK * OMP_NUM_THREADS ))"-"$(( LOCAL_RANK * OMP_NUM_THREADS + OMP_NUM_THREADS - 1))
+		#XFFL_TASKSET="taskset --cpu-list "$(( LOCAL_RANK * OMP_NUM_THREADS ))"-"$(( LOCAL_RANK * OMP_NUM_THREADS + OMP_NUM_THREADS - 1))
 
 		# Python virtual environment
 		if [ -n "$XFFL_VENV" ] ; then
@@ -67,7 +67,7 @@ ${XFFL_IMAGE} \
 		fi
 
 		# Run the local simulation process
-		eval "${XFFL_RANKS} ${XFFL_TASKSET} $COMMAND $*" &
+		eval "${XFFL_RANKS} $COMMAND $*" &
 		pids[_RANK]=$!
 	done
 

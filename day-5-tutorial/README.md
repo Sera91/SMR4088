@@ -392,11 +392,12 @@ DISTRIBUTED_ARGS="--nproc-per-node $GPUS_PER_NODE \
 "
 
 SINGULARITY_IMG="$SCRATCH/slm_mt/*.sif"
+CODE_PATH="$SCRATCH/slm_mt"
 
 echo "starting training"
 
 srun singularity exec --nv --pwd /workspace/Megatron-LM \
-  -B "/leonardo_scratch/large/userexternal/apilzer0/raganato/:/workspace, ${DATA_PATH}/:${DATA_PATH_SINGULARITY}" \
+  -B "${CODE_PATH}/:/workspace, ${DATA_PATH}/:${DATA_PATH_SINGULARITY}" \
   $SINGULARITY_IMG \
   bash -c "ls -ld ${DATA_PATH_SINGULARITY}; ls -ld ${DATA_CACHE_PATH_SINGULARITY}; torchrun ${DISTRIBUTED_ARGS} /workspace/Megatron-LM/pretrain_gpt.py ${options} ${DATA_ARGS_LIST} --log-throughput"
 

@@ -30,7 +30,7 @@ def distributed_training(
     train_dataloader: DataLoader,
     eval_dataloader: DataLoader,
     state: DistributedState,
-    federated_batches: Optional[int] = 1,
+    federated_batches: Optional[int] = 0,
     validate: bool = True,
     epochs: int = 1,
     save_path: Optional[PathLike] = None,
@@ -151,7 +151,7 @@ def distributed_training(
             start_time = time.perf_counter()
 
             with torch.no_grad():
-                if state.is_federated_scaling_setup() and (
+                if state.is_federated_scaling_setup() and federated_batches > 0 and (
                     (step + 1) % federated_batches == 0 or step + 1 == total_length
                 ):
                     aggregate(
@@ -194,6 +194,21 @@ def distributed_training(
             if state.rank == 0:
                 logger.debug(
                     f"[RANK {state.rank}]: Forward: {batch_time:.2f}, Backward: {back_time:.2f}, Optimizer: {optimizer_time:.2f}, Averaging: {comm_time:.2f}, Metrics update: {(time.perf_counter() - start_time):.2f}"
+                )
+        
+        with torch.no_grad():
+            if state.is_federated_scaling_setup():
+                if state.rank == 0:
+                    logger.debug(
+                        f"[RANK {state.rank}]: Running aggregation..."
+                    )
+                aggregate(
+                    strategy=layer_by_layer_optimized(
+                        model=model,
+                        state=state,
+                        use_multiple_cuda_streams=False,
+                        use_contiguous_memory=True,
+                    )
                 )
 
         pbar.close()

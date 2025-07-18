@@ -108,7 +108,7 @@ parser.add_argument(
     "--federated-batches",
     help="Number of training batches to process between two federated averaging",
     type=int,
-    default=1,
+    default=0,
 )
 
 parser.add_argument(
